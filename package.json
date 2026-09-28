@@ -4,9 +4,12 @@
   "main": "index.js",
   "dependencies": {
     "expo": "~57.0.19",
+    "expo-haptics": "~57.0.2",
+    "expo-linear-gradient": "~57.0.1",
     "expo-status-bar": "~57.0.1",
     "react": "19.2.3",
-    "react-native": "0.86.3"
+    "react-native": "0.86.3",
+    "react-native-safe-area-context": "~5.7.0"
   },
   "publishConfig": {
     "executableFiles": [
@@ -17,7 +20,11 @@
     "start": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "postinstall": "patch-package"
   },
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "patch-package": "^8.0.1"
+  }
 }
