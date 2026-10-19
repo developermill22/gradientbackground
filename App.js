@@ -1,111 +1,91 @@
-import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import GradientBackground from './src/components/GradientBackground';
-import GradientGrid from './src/components/GradientGrid';
-import { DEFAULT_GRADIENT, GRADIENTS } from './src/constants/gradients';
+import NavPreviewCard from './src/components/NavPreviewCard';
+import { DESIGN_TIPS, NAV_VARIANTS, PRIMARY } from './src/constants/bottomNav';
 
-function Header({ gradient }) {
-  return (
-    <View style={styles.header}>
-      <Text style={styles.eyebrow}>Gradient Background</Text>
-      <Text style={styles.title}>{gradient.name}</Text>
-      <Text style={styles.subtitle}>
-        Tap any tile to send that gradient to the background.
-      </Text>
-      <View style={styles.chips}>
-        {gradient.colors.map((color) => (
-          <View key={color} style={styles.chip}>
-            <View style={[styles.chipDot, { backgroundColor: color }]} />
-            <Text style={styles.chipText}>{color.toUpperCase()}</Text>
-          </View>
-        ))}
-      </View>
-    </View>
-  );
-}
-
-function Home() {
-  const [gradient, setGradient] = useState(DEFAULT_GRADIENT);
+function Gallery() {
   const insets = useSafeAreaInsets();
 
   return (
-    <GradientBackground gradient={gradient}>
-      <StatusBar style="light" />
-      <GradientGrid
-        gradients={GRADIENTS}
-        selectedId={gradient.id}
-        onSelect={setGradient}
-        ListHeaderComponent={<Header gradient={gradient} />}
-        contentContainerStyle={{
-          paddingTop: insets.top + 8,
-          paddingBottom: insets.bottom + 32,
-        }}
-      />
-    </GradientBackground>
+    <ScrollView
+      style={styles.screen}
+      contentContainerStyle={[
+        styles.content,
+        { paddingTop: insets.top + 12, paddingBottom: insets.bottom + 32 },
+      ]}>
+      <StatusBar style="dark" />
+      <Text style={styles.eyebrow}>Component Series</Text>
+      <Text style={styles.heading}>Bottom Navigation</Text>
+      <Text style={styles.subtitle}>11 styles. Tap any tab to try it.</Text>
+
+      {NAV_VARIANTS.map((variant) => (
+        <NavPreviewCard key={variant.id} variant={variant} />
+      ))}
+
+      <View style={styles.tips}>
+        <Text style={styles.tipsTitle}>Design Tips</Text>
+        {DESIGN_TIPS.map((tip) => (
+          <Text key={tip} style={styles.tip}>
+            ✓  {tip}
+          </Text>
+        ))}
+      </View>
+    </ScrollView>
   );
 }
 
 export default function App() {
   return (
     <SafeAreaProvider>
-      <Home />
+      <Gallery />
     </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  header: {
-    paddingBottom: 8,
-    gap: 6,
+  screen: {
+    flex: 1,
+    backgroundColor: '#F1F2F7',
+  },
+  content: {
+    paddingHorizontal: 16,
+    gap: 16,
   },
   eyebrow: {
-    color: 'rgba(255,255,255,0.6)',
+    color: PRIMARY,
     fontSize: 12,
-    letterSpacing: 1.6,
-    textTransform: 'uppercase',
-    fontWeight: '600',
-  },
-  title: {
-    color: '#fff',
-    fontSize: 34,
     fontWeight: '700',
+    letterSpacing: 1.4,
+    textTransform: 'uppercase',
+  },
+  heading: {
+    marginTop: -10,
+    color: '#15151F',
+    fontSize: 30,
+    fontWeight: '800',
     letterSpacing: -0.5,
   },
   subtitle: {
-    color: 'rgba(255,255,255,0.72)',
+    marginTop: -10,
+    color: '#6E7389',
     fontSize: 14,
-    lineHeight: 20,
   },
-  chips: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+  tips: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 22,
+    padding: 18,
     gap: 8,
-    marginTop: 10,
-    marginBottom: 6,
   },
-  chip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    paddingVertical: 6,
-    paddingHorizontal: 10,
-    borderRadius: 999,
-    backgroundColor: 'rgba(255,255,255,0.12)',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.18)',
+  tipsTitle: {
+    color: PRIMARY,
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 4,
   },
-  chipDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-  },
-  chipText: {
-    color: 'rgba(255,255,255,0.9)',
-    fontSize: 11,
-    fontWeight: '600',
-    letterSpacing: 0.4,
+  tip: {
+    color: '#3A3D4F',
+    fontSize: 14,
   },
 });

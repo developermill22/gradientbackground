@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
+    "@react-native-vector-icons/ionicons": "^13.1.4",
     "expo": "~57.0.19",
+    "expo-blur": "~57.0.3",
     "expo-haptics": "~57.0.2",
     "expo-linear-gradient": "~57.0.1",
     "expo-status-bar": "~57.0.1",
